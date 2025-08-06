@@ -70,8 +70,12 @@ function playVideo(src, title, subSrc) {
         }
       }
     });
-
+    
     TileVideo = data.levels[0].width / data.levels[0].height;
+    let CaptionsButton = document.querySelector('button.plyr__control[data-plyr="captions"]');
+    if (CaptionsButton && CaptionsButton.getAttribute('aria-pressed') === 'false') {
+      CaptionsButton.click();
+    }
     CaptionsChange();
     player.play();
   });
