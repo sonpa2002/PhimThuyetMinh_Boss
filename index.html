@@ -13,44 +13,57 @@
     <div id="video-container">
       <video id="player" controls playsinline></video>
     </div>
-    <div class="LoadingMovie" id="isLoad">Đang phát: Nhấn vào tập phim phía dưới để phát Video</div>
+    <div class="LoadingMovie" id="isLoad">🌼 Nhấn vào tập phim phía dưới để phát Video 🌼</div>
+    <div class="options">
+      <label class="switch">
+        <input type="checkbox" id="autoNext">
+        <span class="slider"></span>
+        <span class="label-text">Tự động chuyển tập</span>
+      </label>
+
+      <label class="switch">
+        <input type="checkbox" id="skipIntroOutro">
+        <span class="slider"></span>
+        <span class="label-text">Bỏ qua giới thiệu phim</span>
+      </label>
+    </div>
     
     <div class="MovieName">Phồn Hoan</div>
-    <button data-src="https://vz-8ee24cea-3f4.b-cdn.net/0b51cff2-418e-4525-926a-b5a2ea0f928a/playlist.m3u8" data-sub="Track/PhonHoan/Tap01.vtt" data-title="Phồn Hoan - Tập 1">Tập 1</button>
-    <button data-src="https://vz-8ee24cea-3f4.b-cdn.net/a43dc4ea-2e87-4b74-8eef-075a27cf180e/playlist.m3u8" data-sub="Track/PhonHoan/Tap02.vtt" data-title="Phồn Hoan - Tập 2">Tập 2</button>
-    <button data-src="https://vz-8ee24cea-3f4.b-cdn.net/be6c5d97-5385-4d6b-ab8b-fdc0a9805156/playlist.m3u8" data-sub="Track/PhonHoan/Tap03.vtt" data-title="Phồn Hoan - Tập 3">Tập 3</button>
-    <button data-src="https://vz-8ee24cea-3f4.b-cdn.net/db2c6c86-5ed0-4894-9af5-0ad058c21965/playlist.m3u8" data-sub="Track/PhonHoan/Tap04.vtt" data-title="Phồn Hoan - Tập 4">Tập 4</button>
-    <button data-src="https://vz-8ee24cea-3f4.b-cdn.net/2b91209f-4ebf-47c8-9910-8303889ea0ef/playlist.m3u8" data-sub="Track/PhonHoan/Tap05.vtt" data-title="Phồn Hoan - Tập 5">Tập 5</button>
-    <button data-src="https://vz-8ee24cea-3f4.b-cdn.net/dafbad04-642c-4763-bbb9-5753614b9fe7/playlist.m3u8" data-sub="Track/PhonHoan/Tap06.vtt" data-title="Phồn Hoan - Tập 6">Tập 6</button>
-    <button data-src="https://vz-8ee24cea-3f4.b-cdn.net/aa3ad652-f38c-47b0-a4a9-ade08ffbc24c/playlist.m3u8" data-sub="Track/PhonHoan/Tap07.vtt" data-title="Phồn Hoan - Tập 7">Tập 7</button>
-    <button data-src="https://vz-8ee24cea-3f4.b-cdn.net/7b90e512-f620-48d0-b7d9-4dd8956e0f14/playlist.m3u8" data-sub="Track/PhonHoan/Tap08.vtt" data-title="Phồn Hoan - Tập 8">Tập 8</button>
-    <button data-src="" data-sub="Track/PhonHoan/Tap09.vtt" data-title="Phồn Hoan - Tập 9">Tập 9</button>
-    <button data-src="" data-sub="Track/PhonHoan/Tap10.vtt" data-title="Phồn Hoan - Tập 10">Tập 10</button>
-    <button data-src="" data-sub="Track/PhonHoan/Tap11.vtt" data-title="Phồn Hoan - Tập 11">Tập 11</button>
-    <button data-src="" data-sub="Track/PhonHoan/Tap12.vtt" data-title="Phồn Hoan - Tập 12">Tập 12</button>
-    <button data-src="" data-sub="Track/PhonHoan/Tap13.vtt" data-title="Phồn Hoan - Tập 13">Tập 13</button>
-    <button data-src="" data-sub="Track/PhonHoan/Tap14.vtt" data-title="Phồn Hoan - Tập 14">Tập 14</button>
-    <button data-src="" data-sub="Track/PhonHoan/Tap15.vtt" data-title="Phồn Hoan - Tập 15">Tập 15</button>
-    <button data-src="" data-sub="Track/PhonHoan/Tap16.vtt" data-title="Phồn Hoan - Tập 16">Tập 16</button>
-    <button data-src="" data-sub="Track/PhonHoan/Tap17.vtt" data-title="Phồn Hoan - Tập 17">Tập 17</button>
-    <button data-src="" data-sub="Track/PhonHoan/Tap18.vtt" data-title="Phồn Hoan - Tập 18">Tập 18</button>
-    <button data-src="" data-sub="Track/PhonHoan/Tap19.vtt" data-title="Phồn Hoan - Tập 19">Tập 19</button>
-    <button data-src="" data-sub="Track/PhonHoan/Tap20.vtt" data-title="Phồn Hoan - Tập 20">Tập 20</button>
-    <button data-src="" data-sub="Track/PhonHoan/Tap21.vtt" data-title="Phồn Hoan - Tập 21">Tập 21</button>
-    <button data-src="" data-sub="Track/PhonHoan/Tap22.vtt" data-title="Phồn Hoan - Tập 22">Tập 22</button>
-    <button data-src="" data-sub="Track/PhonHoan/Tap23.vtt" data-title="Phồn Hoan - Tập 23">Tập 23</button>
-    <button data-src="" data-sub="Track/PhonHoan/Tap24.vtt" data-title="Phồn Hoan - Tập 24">Tập 24</button>
+    <button data-src="https://vz-8ee24cea-3f4.b-cdn.net/0b51cff2-418e-4525-926a-b5a2ea0f928a/playlist.m3u8" data-introFirst="33" data-introEnd="67" data-sub="Track/PhonHoan/Tap01.vtt" data-title="Phồn Hoan - Tập 1">Tập 1</button>
+    <button data-src="https://vz-8ee24cea-3f4.b-cdn.net/a43dc4ea-2e87-4b74-8eef-075a27cf180e/playlist.m3u8" data-introFirst="33" data-introEnd="67" data-sub="Track/PhonHoan/Tap02.vtt" data-title="Phồn Hoan - Tập 2">Tập 2</button>
+    <button data-src="https://vz-8ee24cea-3f4.b-cdn.net/be6c5d97-5385-4d6b-ab8b-fdc0a9805156/playlist.m3u8" data-introFirst="33" data-introEnd="67" data-sub="Track/PhonHoan/Tap03.vtt" data-title="Phồn Hoan - Tập 3">Tập 3</button>
+    <button data-src="https://vz-8ee24cea-3f4.b-cdn.net/db2c6c86-5ed0-4894-9af5-0ad058c21965/playlist.m3u8" data-introFirst="33" data-introEnd="67" data-sub="Track/PhonHoan/Tap04.vtt" data-title="Phồn Hoan - Tập 4">Tập 4</button>
+    <button data-src="https://vz-8ee24cea-3f4.b-cdn.net/2b91209f-4ebf-47c8-9910-8303889ea0ef/playlist.m3u8" data-introFirst="33" data-introEnd="67" data-sub="Track/PhonHoan/Tap05.vtt" data-title="Phồn Hoan - Tập 5">Tập 5</button>
+    <button data-src="https://vz-8ee24cea-3f4.b-cdn.net/dafbad04-642c-4763-bbb9-5753614b9fe7/playlist.m3u8" data-introFirst="33" data-introEnd="67" data-sub="Track/PhonHoan/Tap06.vtt" data-title="Phồn Hoan - Tập 6">Tập 6</button>
+    <button data-src="https://vz-8ee24cea-3f4.b-cdn.net/aa3ad652-f38c-47b0-a4a9-ade08ffbc24c/playlist.m3u8" data-introFirst="33" data-introEnd="67" data-sub="Track/PhonHoan/Tap07.vtt" data-title="Phồn Hoan - Tập 7">Tập 7</button>
+    <button data-src="https://vz-8ee24cea-3f4.b-cdn.net/7b90e512-f620-48d0-b7d9-4dd8956e0f14/playlist.m3u8" data-introFirst="33" data-introEnd="67" data-sub="Track/PhonHoan/Tap08.vtt" data-title="Phồn Hoan - Tập 8">Tập 8</button>
+    <button data-src="" data-introFirst="33" data-introEnd="67" data-sub="Track/PhonHoan/Tap09.vtt" data-title="Phồn Hoan - Tập 9">Tập 9</button>
+    <button data-src="" data-introFirst="33" data-introEnd="67" data-sub="Track/PhonHoan/Tap10.vtt" data-title="Phồn Hoan - Tập 10">Tập 10</button>
+    <button data-src="" data-introFirst="33" data-introEnd="67" data-sub="Track/PhonHoan/Tap11.vtt" data-title="Phồn Hoan - Tập 11">Tập 11</button>
+    <button data-src="" data-introFirst="33" data-introEnd="67" data-sub="Track/PhonHoan/Tap12.vtt" data-title="Phồn Hoan - Tập 12">Tập 12</button>
+    <button data-src="" data-introFirst="33" data-introEnd="67" data-sub="Track/PhonHoan/Tap13.vtt" data-title="Phồn Hoan - Tập 13">Tập 13</button>
+    <button data-src="" data-introFirst="33" data-introEnd="67" data-sub="Track/PhonHoan/Tap14.vtt" data-title="Phồn Hoan - Tập 14">Tập 14</button>
+    <button data-src="" data-introFirst="33" data-introEnd="67" data-sub="Track/PhonHoan/Tap15.vtt" data-title="Phồn Hoan - Tập 15">Tập 15</button>
+    <button data-src="" data-introFirst="33" data-introEnd="67" data-sub="Track/PhonHoan/Tap16.vtt" data-title="Phồn Hoan - Tập 16">Tập 16</button>
+    <button data-src="" data-introFirst="33" data-introEnd="67" data-sub="Track/PhonHoan/Tap17.vtt" data-title="Phồn Hoan - Tập 17">Tập 17</button>
+    <button data-src="" data-introFirst="33" data-introEnd="67" data-sub="Track/PhonHoan/Tap18.vtt" data-title="Phồn Hoan - Tập 18">Tập 18</button>
+    <button data-src="" data-introFirst="33" data-introEnd="67" data-sub="Track/PhonHoan/Tap19.vtt" data-title="Phồn Hoan - Tập 19">Tập 19</button>
+    <button data-src="" data-introFirst="33" data-introEnd="67" data-sub="Track/PhonHoan/Tap20.vtt" data-title="Phồn Hoan - Tập 20">Tập 20</button>
+    <button data-src="" data-introFirst="33" data-introEnd="67" data-sub="Track/PhonHoan/Tap21.vtt" data-title="Phồn Hoan - Tập 21">Tập 21</button>
+    <button data-src="" data-introFirst="33" data-introEnd="67" data-sub="Track/PhonHoan/Tap22.vtt" data-title="Phồn Hoan - Tập 22">Tập 22</button>
+    <button data-src="" data-introFirst="33" data-introEnd="67" data-sub="Track/PhonHoan/Tap23.vtt" data-title="Phồn Hoan - Tập 23">Tập 23</button>
+    <button data-src="" data-introFirst="33" data-introEnd="67" data-sub="Track/PhonHoan/Tap24.vtt" data-title="Phồn Hoan - Tập 24">Tập 24</button>
 
 
     <div class="MovieName">Khúc Từ Biệt Trước Gương</div>
-    <button data-src="https://vz-8ee24cea-3f4.b-cdn.net/95abaca2-f498-4ac5-9a2b-be0ae3e6a376/playlist.m3u8" data-sub="Track/KhucTuBietTruocGuong/Tap01.vtt" data-title="Khúc Từ Biệt Trước Gương - Tập 1">Tập 1</button>
-    <button data-src="https://vz-8ee24cea-3f4.b-cdn.net/d0326eec-eaa9-47f2-8935-a4d603ea8be5/playlist.m3u8" data-sub="Track/KhucTuBietTruocGuong/Tap02.vtt" data-title="Khúc Từ Biệt Trước Gương - Tập 2">Tập 2</button>
-    <button data-src="https://vz-8ee24cea-3f4.b-cdn.net/3bac0536-81b8-407d-80f3-99bc6cfce1ca/playlist.m3u8" data-sub="Track/KhucTuBietTruocGuong/Tap03.vtt" data-title="Khúc Từ Biệt Trước Gương - Tập 3">Tập 3</button>
-    <button data-src="https://vz-8ee24cea-3f4.b-cdn.net/3498bb48-0f2e-4720-aaf2-3fb5d95809f3/playlist.m3u8" data-sub="Track/KhucTuBietTruocGuong/Tap04.vtt" data-title="Khúc Từ Biệt Trước Gương - Tập 4">Tập 4</button>
-    <button data-src="https://vz-8ee24cea-3f4.b-cdn.net/8a01330f-b3f3-4c1f-a384-a04e1b5fa430/playlist.m3u8" data-sub="Track/KhucTuBietTruocGuong/Tap05.vtt" data-title="Khúc Từ Biệt Trước Gương - Tập 5">Tập 5</button>
-    <button data-src="https://vz-8ee24cea-3f4.b-cdn.net/c5bd67c0-0db7-4df6-9151-27571563e627/playlist.m3u8" data-sub="Track/KhucTuBietTruocGuong/Tap06.vtt" data-title="Khúc Từ Biệt Trước Gương - Tập 6">Tập 6</button>
-    <button data-src="https://vz-8ee24cea-3f4.b-cdn.net/3498cdbe-438d-48fa-84c9-75d04ca86126/playlist.m3u8" data-sub="Track/KhucTuBietTruocGuong/Tap07.vtt" data-title="Khúc Từ Biệt Trước Gương - Tập 7">Tập 7</button>
-    <button data-src="https://vz-8ee24cea-3f4.b-cdn.net/fbca3c5e-04bb-4ed8-9d90-189488dbd428/playlist.m3u8" data-sub="Track/KhucTuBietTruocGuong/Tap08.vtt" data-title="Khúc Từ Biệt Trước Gương - Tập 8">Tập 8</button>
+    <button data-src="https://vz-8ee24cea-3f4.b-cdn.net/95abaca2-f498-4ac5-9a2b-be0ae3e6a376/playlist.m3u8" data-introFirst="0" data-introEnd="29" data-sub="Track/KhucTuBietTruocGuong/Tap01.vtt" data-title="Khúc Từ Biệt Trước Gương - Tập 1">Tập 1</button>
+    <button data-src="https://vz-8ee24cea-3f4.b-cdn.net/d0326eec-eaa9-47f2-8935-a4d603ea8be5/playlist.m3u8" data-introFirst="29" data-introEnd="29" data-sub="Track/KhucTuBietTruocGuong/Tap02.vtt" data-title="Khúc Từ Biệt Trước Gương - Tập 2">Tập 2</button>
+    <button data-src="https://vz-8ee24cea-3f4.b-cdn.net/3bac0536-81b8-407d-80f3-99bc6cfce1ca/playlist.m3u8" data-introFirst="29" data-introEnd="29" data-sub="Track/KhucTuBietTruocGuong/Tap03.vtt" data-title="Khúc Từ Biệt Trước Gương - Tập 3">Tập 3</button>
+    <button data-src="https://vz-8ee24cea-3f4.b-cdn.net/3498bb48-0f2e-4720-aaf2-3fb5d95809f3/playlist.m3u8" data-introFirst="29" data-introEnd="29" data-sub="Track/KhucTuBietTruocGuong/Tap04.vtt" data-title="Khúc Từ Biệt Trước Gương - Tập 4">Tập 4</button>
+    <button data-src="https://vz-8ee24cea-3f4.b-cdn.net/8a01330f-b3f3-4c1f-a384-a04e1b5fa430/playlist.m3u8" data-introFirst="29" data-introEnd="17" data-sub="Track/KhucTuBietTruocGuong/Tap05.vtt" data-title="Khúc Từ Biệt Trước Gương - Tập 5">Tập 5</button>
+    <button data-src="https://vz-8ee24cea-3f4.b-cdn.net/c5bd67c0-0db7-4df6-9151-27571563e627/playlist.m3u8" data-introFirst="29" data-introEnd="29" data-sub="Track/KhucTuBietTruocGuong/Tap06.vtt" data-title="Khúc Từ Biệt Trước Gương - Tập 6">Tập 6</button>
+    <button data-src="https://vz-8ee24cea-3f4.b-cdn.net/3498cdbe-438d-48fa-84c9-75d04ca86126/playlist.m3u8" data-introFirst="29" data-introEnd="29" data-sub="Track/KhucTuBietTruocGuong/Tap07.vtt" data-title="Khúc Từ Biệt Trước Gương - Tập 7">Tập 7</button>
+    <button data-src="https://vz-8ee24cea-3f4.b-cdn.net/fbca3c5e-04bb-4ed8-9d90-189488dbd428/playlist.m3u8" data-introFirst="29" data-introEnd="29" data-sub="Track/KhucTuBietTruocGuong/Tap08.vtt" data-title="Khúc Từ Biệt Trước Gương - Tập 8">Tập 8</button>
     <button data-src="" data-sub="Track/KhucTuBietTruocGuong/Tap09.vtt" data-title="Khúc Từ Biệt Trước Gương - Tập 9">Tập 9</button>
     <button data-src="" data-sub="Track/KhucTuBietTruocGuong/Tap10.vtt" data-title="Khúc Từ Biệt Trước Gương - Tập 10">Tập 10</button>
     <button data-src="" data-sub="Track/KhucTuBietTruocGuong/Tap11.vtt" data-title="Khúc Từ Biệt Trước Gương - Tập 11">Tập 11</button>
