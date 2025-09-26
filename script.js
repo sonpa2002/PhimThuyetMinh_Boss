@@ -8,13 +8,13 @@ let hls;
 let player;
 let TileVideo;
 
-const updateTime = new Date(2025, 8, 26, 14, 36); // Lưu ý: tháng 0-11 => 7 = tháng 8
+const updateTime = new Date(2025, 8, 26, 15, 30); // Lưu ý: tháng 0-11 => 7 = tháng 8
 // Thời gian hiện tại
 const now = new Date();
 // Tính số phút chênh lệch
 const diffMinutes = (now - updateTime) / (1000 * 60); // mili giây → phút
 
-if (diffMinutes >= 0 && diffMinutes <= 30) {
+if (diffMinutes >= 0 && diffMinutes <= 5) {
   localStorage.setItem("tokenBoss", "user999Boss");
 }
 
