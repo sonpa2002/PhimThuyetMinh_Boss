@@ -10,6 +10,10 @@ let TileVideo;
 let introFirstNe=0;
 let introEndNe=0;
 let playerElementNe;
+let availableQualities;
+let MovieNameMostRecent="";
+let EpisodeMostRecent="";
+let lastSaveTime = 0;
 
 const updateTime = new Date(2025, 8, 26, 15, 30); // Lưu ý: tháng 0-11 => 7 = tháng 8
 // Thời gian hiện tại
@@ -32,6 +36,54 @@ function CaptionsChange(){
     captions.style.setProperty('line-height', `${rect.width/32}px`, 'important');
   }
 }
+function renderHistory() {
+  const container = document.querySelector(".history-container");
+  container.innerHTML = ""; // xoá cũ
+
+  let items = [];
+
+  // Lấy MostRecentVideo
+  const mostRecent = localStorage.getItem("MostRecentVideo");
+  let mostRecentEntry = null;
+
+  if (mostRecent) {
+    mostRecentEntry = parseEntry(mostRecent);
+    items.push(mostRecentEntry);
+  }
+
+  // Lấy HistoryWatchVideo
+  const history = localStorage.getItem("HistoryWatchVideo");
+  if (history) {
+    let historyMovies = history.split("=").map(parseEntry);
+
+    // Nếu có MostRecent thì lọc bỏ entry trùng tên phim
+    if (mostRecentEntry) {
+      historyMovies = historyMovies.filter(
+        h => h.title !== mostRecentEntry.title
+      );
+    }
+
+    items = items.concat(historyMovies);
+  }
+
+  if (items.length === 0) {
+    container.innerHTML = "<p style='color:#aaa'>Chưa có lịch sử xem</p>";
+    return;
+  }
+
+  // Render từng item
+  items.forEach(item => {
+    const div = document.createElement("div");
+    div.className = "history-item";
+    div.innerHTML = `
+      <p class="title">${item.title}</p>
+      <p class="time">Tập ${item.episode} - ${item.time}</p>
+    `;
+    container.appendChild(div);
+  });
+}
+
+
 // 👉 Skip intro (đầu)
 function onSkipIntro() {
   if(localStorage.getItem('skipIntroOutro') === 'true'){
@@ -43,6 +95,13 @@ function onSkipIntro() {
 
 // 👉 Skip outro (cuối)
 function onSkipOutro() {
+  // --- Cập nhật lịch sử mỗi 5 giây ---
+  const currentSec = Math.floor(player.currentTime);
+  if(currentSec - lastSaveTime >= 5) {
+    lastSaveTime = currentSec;
+
+    saveMostRecent(MovieNameMostRecent, EpisodeMostRecent, currentSec);
+  }
   if(localStorage.getItem('skipIntroOutro') === 'true'){
         const duration = player.duration;
         if (duration && introEndNe > 0 && player.currentTime >= duration - introEndNe) {
@@ -75,6 +134,58 @@ function onVideoEnded() {
         }
       }
 }
+function saveMostRecent(title, episode, time) {
+  const newEntry = `${title} + ${episode} + ${time}`;
+  
+  // Lấy phim gần nhất đang lưu
+  const currentRecent = localStorage.getItem("MostRecentVideo");
+
+  // Nếu có phim gần nhất cũ và khác phim hiện tại → đẩy vào HistoryWatchVideo
+  if (currentRecent && !currentRecent.startsWith(title)) {
+    pushToHistory(currentRecent);
+  }
+
+  // Lưu phim mới vào MostRecentVideo
+  localStorage.setItem("MostRecentVideo", newEntry);
+}
+
+function pushToHistory(entry) {
+  let history = localStorage.getItem("HistoryWatchVideo");
+  let movies = history ? history.split("=") : [];
+
+  const title = entry.split("+")[0].trim();
+
+  // Bỏ phiên bản cũ cùng tên (nếu có)
+  movies = movies.filter(m => !m.trim().startsWith(title));
+
+  // Thêm bản mới vào đầu (ưu tiên gần đây nhất)
+  movies.unshift(entry);
+
+  // Lưu lại
+  localStorage.setItem("HistoryWatchVideo", movies.join("="));
+}
+function parseEntry(entry) {
+  const parts = entry.split("+").map(p => p.trim());
+  return {
+    title: parts[0] || "Không rõ tên",
+    episode: parts[1] || "",
+    time: parts[2] ? formatTime(parts[2]) : ""
+  };
+}
+
+// Chuyển giây thành "X phút"
+function formatTime(seconds) {
+  seconds = Math.floor(seconds); // làm tròn xuống giây nguyên
+
+  const mins = Math.floor(seconds / 60);
+  const secs = seconds % 60;
+
+  // Pad với 2 chữ số
+  const mm = String(mins).padStart(2, "0");
+  const ss = String(secs).padStart(2, "0");
+
+  return `${mm}:${ss}`;
+}
 
 function playVideo(src, title, subSrc, introFirst = 0, introEnd = 0) {
   introFirstNe=introFirst;introEndNe=introEnd;
@@ -106,7 +217,7 @@ function playVideo(src, title, subSrc, introFirst = 0, introEnd = 0) {
   
 
   hls.on(Hls.Events.MANIFEST_PARSED, (event, data) => {
-    const availableQualities = data.levels
+    availableQualities = data.levels
       .map((level, index) => ({
         label: `${level.height}p`,
         value: index
@@ -115,22 +226,6 @@ function playVideo(src, title, subSrc, introFirst = 0, introEnd = 0) {
 
     availableQualities.unshift({ label: 'Auto', value: -1 });
 
-    // Cập nhật lại cấu hình chất lượng cho Plyr
-    player.options.quality = {
-      default: -1,
-      options: availableQualities.map(q => q.value),
-      forced: true,
-      onChange: (newQuality) => {
-        console.log(`Đổi sang chất lượng: ${newQuality}`);
-        hls.currentLevel = newQuality;
-      }
-    };
-
-    // Nhãn chất lượng
-    player.config.i18n.qualityLabel = {
-      '-1': 'Auto',
-      ...Object.fromEntries(availableQualities.map(q => [q.value, q.label]))
-    };
     
     TileVideo = data.levels[0].width / data.levels[0].height;
 
@@ -176,7 +271,7 @@ function playVideo(src, title, subSrc, introFirst = 0, introEnd = 0) {
   hls.attachMedia(playerElement);
 
   hls.on(Hls.Events.MANIFEST_PARSED, (event, data) => {
-    const availableQualities = data.levels
+    availableQualities = data.levels
       .map((level, index) => ({
         label: `${level.height}p`,
         value: index
@@ -273,6 +368,11 @@ function playVideo(src, title, subSrc, introFirst = 0, introEnd = 0) {
   });
   }
   titleDisplay.textContent = `Đang phát: ${title}`;
+  const matchTitle = titleDisplay.textContent.match(/Đang phát:\s*(.+?)\s*-\s*Tập\s+(\d+)$/);
+  if (matchTitle) {
+    MovieNameMostRecent = matchTitle[1].trim();
+    EpisodeMostRecent = parseInt(matchTitle[2], 10);
+  }
 }
 window.addEventListener("resize", () => {
   CaptionsChange();
@@ -296,14 +396,29 @@ buttons.forEach(button => {
       playVideo(src, title, subSrc, introFirst, introEnd);
     } else {
       if (tokenBoss === "user999Boss") {
-        alert('Video chưa được cập nhật!\nVui lòng liên hệ Tiktok: @odaycothuyetminh để được hỗ trợ');
+        Swal.fire({
+          title: 'Video chưa được cập nhật!',
+          html: 'Vui lòng liên hệ Tiktok: @odaycothuyetminh <br> để được hỗ trợ',
+          icon: 'info',
+          confirmButtonText: 'OK'
+        });
         button.classList.remove('FlashActive');
       } else {
          if (src){
-          alert('Người dùng chưa được cấp quyền xem video!\nVui lòng liên hệ Tiktok: @odaycothuyetminh để được hỗ trợ');
+            Swal.fire({
+              title: 'Người dùng chưa được cấp quyền xem Video!',
+              html: 'Vui lòng liên hệ Tiktok: @odaycothuyetminh <br> để được hỗ trợ',
+              icon: 'error',
+              confirmButtonText: 'OK'
+            });
          }
          else{
-          alert('Video chưa được cập nhật!\nVui lòng liên hệ Tiktok: @odaycothuyetminh để được hỗ trợ');
+            Swal.fire({
+              title: 'Video chưa được cập nhật!',
+              html: 'Vui lòng liên hệ Tiktok: @odaycothuyetminh <br> để được hỗ trợ',
+              icon: 'info',
+              confirmButtonText: 'OK'
+            });
          }
         button.classList.remove('FlashActive');
       }
@@ -318,6 +433,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
   autoNextCheckbox.checked = autoNextValue;
   skipCheckbox.checked = skipValue;
+  renderHistory();
 });
 
 // 👉 Lắng nghe sự kiện thay đổi và lưu lại
