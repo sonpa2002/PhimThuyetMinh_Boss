@@ -154,8 +154,8 @@ button[data-src].FlashActive {
   padding-bottom: 8px;
   scroll-snap-type: x mandatory;
 }
-.history-container .history-item:only-child {
-  margin: 0 auto; /* nếu chỉ có 1 item thì căn giữa */
+.history-container.center {
+  justify-content: center; /* khi không overflow thì căn giữa */
 }
 .history-container::-webkit-scrollbar {
   height: 6px;

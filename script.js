@@ -36,10 +36,59 @@ function CaptionsChange(){
     captions.style.setProperty('line-height', `${rect.width/32}px`, 'important');
   }
 }
+function updateHistoryLayout() {
+  const Historycontainer = document.querySelector('.history-container');
+  if (!Historycontainer) return;
+
+  // so sánh chiều rộng scroll với khung hiển thị
+  if (Historycontainer.scrollWidth <= Historycontainer.clientWidth) {
+    Historycontainer.classList.add('center');  // không overflow → căn giữa
+  } else {
+    Historycontainer.classList.remove('center'); // overflow → căn trái
+  }
+}
+function parseTimeToSeconds(timeStr) {
+  const [mm, ss] = timeStr.split(":").map(Number);
+  return mm * 60 + ss;
+}
+function cleanHistoryByDom() {
+  // Lấy danh sách tên phim hiện có trong DOM
+  const domMovies = Array.from(document.querySelectorAll(".MovieName"))
+    .map(el => el.innerHTML.trim());
+
+  // --- Xử lý MostRecentVideo ---
+  let mostRecent = localStorage.getItem("MostRecentVideo");
+  if (mostRecent) {
+    const titleRecent = mostRecent.split("+")[0].trim();
+    if (!domMovies.includes(titleRecent)) {
+      localStorage.removeItem("MostRecentVideo");
+    }
+  }
+
+  // --- Xử lý HistoryWatchVideo ---
+  let history = localStorage.getItem("HistoryWatchVideo");
+  if (history) {
+    let movies = history.split("=");
+    let filtered = movies.filter(entry => {
+      const title = entry.split("+")[0].trim();
+      return domMovies.includes(title); // giữ lại nếu còn trong DOM
+    });
+
+    if (filtered.length > 0) {
+      localStorage.setItem("HistoryWatchVideo", filtered.join("="));
+    } else {
+      localStorage.removeItem("HistoryWatchVideo"); // nếu không còn phim nào thì xóa hẳn
+    }
+
+    
+  }
+}
+
+
 function renderHistory() {
   const container = document.querySelector(".history-container");
   container.innerHTML = ""; // xoá cũ
-
+  cleanHistoryByDom();
   let items = [];
 
   // Lấy MostRecentVideo
@@ -75,10 +124,33 @@ function renderHistory() {
   items.forEach(item => {
     const div = document.createElement("div");
     div.className = "history-item";
+    div.dataset.movie = `${item.title} - Tập ${item.episode}`;
+    div.dataset.time = item.time;
     div.innerHTML = `
       <p class="title">${item.title}</p>
       <p class="time">Tập ${item.episode} - ${item.time}</p>
     `;
+
+    div.addEventListener("click", () => {
+
+    // ví dụ: tìm nút tương ứng và click
+    const FindButton = Array.from(buttons).find(
+      btn => btn.getAttribute("data-title") === div.dataset.movie
+    );
+    if (FindButton) {
+      FindButton.click();
+      introFirstNe=parseTimeToSeconds(div.dataset.time);
+    }
+    else{
+      Swal.fire({
+        title: 'Có gì đó hông đúng gòi ní ơi',
+        html: 'Tập phim đã bị xóa hoặc không tồn tại!',
+        icon: 'warning',
+        confirmButtonText: 'OK'
+      });
+      location.reload();
+    }
+    });
     container.appendChild(div);
   });
 }
@@ -188,7 +260,7 @@ function formatTime(seconds) {
 }
 
 function playVideo(src, title, subSrc, introFirst = 0, introEnd = 0) {
-  introFirstNe=introFirst;introEndNe=introEnd;
+  introFirstNe=introFirst;introEndNe=introEnd;lastSaveTime=0;
   if (hls) hls.destroy();
   
 
@@ -376,7 +448,7 @@ function playVideo(src, title, subSrc, introFirst = 0, introEnd = 0) {
 }
 window.addEventListener("resize", () => {
   CaptionsChange();
-    
+  updateHistoryLayout();
 });
 
 // Gán sự kiện click
@@ -434,6 +506,7 @@ window.addEventListener('DOMContentLoaded', () => {
   autoNextCheckbox.checked = autoNextValue;
   skipCheckbox.checked = skipValue;
   renderHistory();
+  updateHistoryLayout();
 });
 
 // 👉 Lắng nghe sự kiện thay đổi và lưu lại
