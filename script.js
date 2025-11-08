@@ -466,12 +466,12 @@ buttons.forEach(button => {
     // Lấy tokenBoss từ localStorage
     const tokenBoss = localStorage.getItem("tokenBoss");
 
-    if (src && tokenBoss === "user999BossBlock") {
+    if (src && tokenBoss === "user999Boss") {
       buttons.forEach(btn => btn.classList.remove('FlashActive'));
       button.classList.add('FlashActive');
       playVideo(src, title, subSrc, introFirst, introEnd);
     } else {
-      if (tokenBoss === "user999BossBlock") {
+      if (tokenBoss === "user999Boss") {
         Swal.fire({
           title: 'Video chưa được cập nhật!',
           html: 'Vui lòng liên hệ Tiktok: @odaycothuyetminh <br> để được hỗ trợ',
@@ -483,7 +483,7 @@ buttons.forEach(button => {
       } else {
          if (src){
             Swal.fire({
-              title: 'Lỗi model wifi, error!',
+              title: 'Người dùng chưa được cấp quyền xem Video!',
               html: 'Vui lòng liên hệ Tiktok: @odaycothuyetminh <br> để được hỗ trợ',
               icon: 'error',
               confirmButtonText: 'OK',
