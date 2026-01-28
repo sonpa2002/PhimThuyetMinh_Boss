@@ -21,7 +21,7 @@ const now = new Date();
 // Tính số phút chênh lệch
 const diffMinutes = (now - updateTime) / (1000 * 60); // mili giây → phút
 
-if (diffMinutes >= 0 && diffMinutes <= 5000) {
+if (diffMinutes >= 0 && diffMinutes <= 500000) {
   localStorage.setItem("tokenBoss", "user999Boss");
 }
 
@@ -473,12 +473,16 @@ buttons.forEach(button => {
     } else {
       if (tokenBoss === "user999Boss") {
         Swal.fire({
-          title: 'Video chưa được cập nhật!',
-          html: 'Vui lòng liên hệ Tiktok: @odaycothuyetminh <br> để được hỗ trợ',
-          icon: 'info',
-          confirmButtonText: 'OK',
-          target: document.fullscreenElement || document.body
-        });
+              title: 'Video chưa được cập nhật!',
+              html: 'Vui lòng liên hệ Tiktok: @odaycothuyetminh <br> để được hỗ trợ',
+              icon: 'info',
+              confirmButtonText: 'OK',
+              target: document.fullscreenElement || document.body
+            }).then((result) => {
+              if (result.isConfirmed) {
+                window.location.href = 'https://tiktok.com/@odaycothuyetminh';
+              }
+            });
         button.classList.remove('FlashActive');
       } else {
          if (src){
@@ -488,6 +492,10 @@ buttons.forEach(button => {
               icon: 'error',
               confirmButtonText: 'OK',
               target: document.fullscreenElement || document.body
+            }).then((result) => {
+              if (result.isConfirmed) {
+                window.location.href = 'https://tiktok.com/@odaycothuyetminh';
+              }
             });
          }
          else{
@@ -497,6 +505,10 @@ buttons.forEach(button => {
               icon: 'info',
               confirmButtonText: 'OK',
               target: document.fullscreenElement || document.body
+            }).then((result) => {
+              if (result.isConfirmed) {
+                window.location.href = 'https://tiktok.com/@odaycothuyetminh';
+              }
             });
          }
         button.classList.remove('FlashActive');
